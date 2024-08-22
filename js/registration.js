@@ -1,6 +1,5 @@
 // Function to validate the password
 function validatePassword(password) {
-    // Regex for at least one capital letter and at least two numbers
     const regex = /^(?=.*[A-Z])(?=.*\d.*\d).+$/;
     return regex.test(password);
 }
