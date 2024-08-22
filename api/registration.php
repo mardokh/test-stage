@@ -1,3 +1,4 @@
+
 <?php
 
 // * ADMIN REGISTRATION * //
@@ -34,17 +35,14 @@ if(!empty($donnees->firstName) && !empty($donnees->lastName) && !empty($donnees-
         $objt_query->execute();
 
         // send sucess response
-        echo json_encode(['successfully_registered' => true]);
-
+        echo json_encode(['successfully_registered' => 'you are successfully registred']);
     }
     // Handle errors
     catch (PDOException $e) {
-        echo json_encode(['registered_failed' => ' error : ' . $e->getMessage()]);
+        echo json_encode(['registration_failed' => ' error during registration process : ' . $e->getMessage()]);
     }
+
 }
-// when field are missing
-else {
-    echo json_encode(['error' => 'All fields are required']);
-}
+
 
 ?>

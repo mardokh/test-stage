@@ -115,6 +115,18 @@ body {
     background-color: rgb(19, 105, 100);
 }
 
+.rectangle_registration_test {
+    width: 200px;
+    height: 50px;
+    background-color: black;
+}
+
+.form_registration_error_display {
+     text-align: center;
+     color: red;
+      font-size: 1rem;
+}
+
 
 /** CONNECTION PAGE **/
 
@@ -180,5 +192,28 @@ body {
 }
 
 .form_connection_reset_password_container p {
+    cursor: pointer;
+}
+
+.form_connection_error {
+   color: red;
+   font-size: 0.9rem;
+}
+
+.input_failed_connection {
+   border: 1px solid red;
+}
+
+
+/** DASHBOARD PAGE **/
+
+.dashboard_parent_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logout_btn {
+    padding: 10px;
     cursor: pointer;
 }

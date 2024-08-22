@@ -1,6 +1,6 @@
 <?php
 
-// * ADMIN CONNECTION * //
+session_start();
 
 // catching data from js query
 $donneesJson = file_get_contents('php://input');
@@ -8,36 +8,46 @@ $donneesJson = file_get_contents('php://input');
 // convert data to php object
 $donnees = json_decode($donneesJson);
 
-// Check inputs
-if(isset($donnees->email) && !empty($donnees->password)) {
+if (!empty($donnees->email) && !empty($donnees->password)) {
 
-    // connect to database
-    require_once("./db.connect.php");
+    try {
+        // connect to database
+        require_once("./db.connect.php");
 
-    // comparing data check
-    $select_query = "SELECT * FROM admins WHERE email = :email AND password = :password";
+        // Query to fetch the user by email only
+        $select_query = "SELECT * FROM admins WHERE email = :email";
 
-    // prepare request
-    $objt_query = $connexion->prepare($select_query);
+        // prepare request
+        $objt_query = $connexion->prepare($select_query);
 
-    // bind the values
-    $objt_query->bindValue(":email", $donnees->email);
-    $objt_query->bindValue(":password", $donnees->password);
+        // bind the email value
+        $objt_query->bindValue(":email", $donnees->email);
 
-    // execute request
-    $objt_query->execute();
+        // execute request
+        $objt_query->execute();
 
-    // check result
-    $result = $objt_query->fetch(PDO::FETCH_ASSOC);
+        // fetch the result
+        $result = $objt_query->fetch(PDO::FETCH_ASSOC);
 
-    // Send result
-    if($result == false){
-        echo json_encode(['connected' => true]);
-        exit;
+        // Check if the user exists and verify the password
+        if ($result && password_verify($donnees->password, $result['password'])) {
+            // create session variables
+            $_SESSION['log_success'] = 'successfully connecting';
+            $_SESSION['first_name'] = $result['firstName'];
+            $_SESSION['last_name'] = $result['lastName'];
+            $_SESSION['e_mail'] = $result['email'];
+
+            echo 'connect_success';
+        } else {
+            // If the password is incorrect or the user does not exist
+            echo 'connect_failed';
+        }
     }
-    else{
-        echo json_encode(['connect_failed' => true]);
+    // Handle errors
+    catch (PDOException $e) {
+        echo json_encode(['registration_failed' => ' error during registration process : ' . $e->getMessage()]);
     }
+
 }
 
 ?>

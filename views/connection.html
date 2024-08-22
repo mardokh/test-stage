@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/styles.css">
     <title>Admin connection</title>
-    <script async src="../js/app.js"></script>
+    <script async src="../js/connection.js"></script>
 </head>
 <body>
     <div class="form_connection_parent_container">
-        <form class="form_connection_container">
+        <form class="form_connection_container" id="form_elem">
             <div>
                 <h2 class="form_connection_title_container">
                     <p>Admin connection</p>
@@ -23,7 +23,10 @@
             <div class="form_connection_reset_password_container">
                 <p>Mot de passe oublier !</p>
             </div>
+            <div class="form_connection_error_container">
+		<p class="form_connection_error" id="form_connection_display_error"></p>
+	    </div>
         </form>
-    </div>
+   </div>
 </body>
 </html>
